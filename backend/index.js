@@ -1,19 +1,22 @@
 const express = require("express");
 const cors = require("cors");
-const connectToMongo = require("./db"); // Assuming you have a file for MongoDB connection
-const uploadRoutes = require("./routes/upload"); // Import your upload routes
+const connectToMongo = require("./db");
+const uploadRoutes = require("./routes/upload"); // Import your routes
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-
 const port = 1000;
 
-// Connect to MongoDB
-connectToMongo();
+// Use CORS middleware with specific origin
+app.use(cors({
+  origin: 'http://192.168.1.114:3000', // Allow requests from this origin
+  methods: ['GET', 'POST'], // Specify allowed methods
+  credentials: true // If your frontend needs to send cookies, you might need this
+}));
 
-// Use the upload routes
-app.use("/api", uploadRoutes);
+app.use(express.json());
+app.use("/api", uploadRoutes); // Use your upload routes under a common path
+
+connectToMongo();
 
 app.listen(port, () => {
   console.log(`FileUpload backend listening on port ${port}`);

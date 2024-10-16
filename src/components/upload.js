@@ -16,7 +16,7 @@ const Upload = () => {
     formData.append("image",image);
 // eslint-disable-next-line
   const result = await axios.post(
-    "http://localhost:1000/api/upload-image", formData,
+    "http://192.168.1.114:1000/api/upload-image", formData,
     {
     headers: {"Content-Type": "multipart/form-data"},
     }
@@ -28,7 +28,7 @@ const Upload = () => {
   }
   
   const getImage=async()=>{
-    const result = await axios.get("http://localhost:1000/api/get-image");
+    const result = await axios.get("http://192.168.1.114:1000/api/get-image");
     console.log(result);
     setAllImage(result.data.data);
   }
