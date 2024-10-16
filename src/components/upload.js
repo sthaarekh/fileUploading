@@ -46,11 +46,11 @@ const Upload = () => {
         console.log("Deletion canceled.");
     }
 }
-
   return (
     <div className='container'>
       <div className='grid'>
         <h1 className="text-3xl text-center">Mongo File Uploads</h1>
+        <h1 className="text-2xl font-samarkan text-center">-sthaarekh</h1>
         <form className="m-5 p-6 border border-gray-300 rounded-lg shadow-lg bg-white" onSubmit={submitImage} encType="multipart/form-data">
             <label htmlFor="file" className="block text-lg font-semibold mb-2 text-gray-700">Upload Image</label>
             <input type="file" name="file" id="file" className="block w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={onInputChange} />
