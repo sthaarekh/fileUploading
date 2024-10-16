@@ -1,29 +1,20 @@
 const express = require("express");
-const multer = require("multer");
-const app = express();
-const mongoose = require("mongoose");
-app.use(express.json());
 const cors = require("cors");
-app.use(cors());
+const connectToMongo = require("./db"); // Assuming you have a file for MongoDB connection
+const uploadRoutes = require("./routes/upload"); // Import your upload routes
 
-const port= 1000;
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const port = 1000;
+
+// Connect to MongoDB
+connectToMongo();
+
+// Use the upload routes
+app.use("/api", uploadRoutes);
 
 app.listen(port, () => {
-  console.log(`FileUpload backend listening on port ${port}`)
-})
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, uniqueSuffix+ file.originalname)
-  }
-})
-
-const upload = multer({ storage: storage })
-app.post("/upload-image",upload.single("image"),async (req, res) => {
-console.log(req.body);
-res.send("Uploaded");
-})
+  console.log(`FileUpload backend listening on port ${port}`);
+});
