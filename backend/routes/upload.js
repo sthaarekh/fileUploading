@@ -7,7 +7,7 @@ require("../models/image"); // Assuming the model is in the models directory
 const Images = mongoose.model("ImageDetails");
 
 // POST route for uploading an image
-router.post("/upload-image", upload.single("image"), async (req, res) => {
+router.post("/upload", upload.single("image"), async (req, res) => {
   const imageName = req.file.filename;
   try {
     // Save image filename to the database
@@ -18,7 +18,8 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
   }
 });
 
-router.get("/get-image",async(req,res)=>{
+//Get Method 
+router.get("/get",async(req,res)=>{
     try {
         const data = await Images.find({}); // Use async/await consistently
         res.json({ status: 'ok', data: data });
@@ -28,4 +29,17 @@ router.get("/get-image",async(req,res)=>{
       }
 })
 
+//delete method
+router.delete("/delete/:id",async(req,res)=>{
+    try {
+        let data = await Images.findById(req.params.id);
+        if (!data) { return res.status(404).send("Not Found") }
+        data = await Images.findByIdAndDelete(req.params.id);
+        res.json("Success transaction has been deleted");
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+})
 module.exports = router;
