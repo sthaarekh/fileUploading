@@ -35,28 +35,23 @@ const Upload = () => {
     
   return (
     <div className='container'>
-      <div className='grid grid-cols-2 m-auto'>
+      <div className='grid'>
         <h1 className="text-3xl text-center">Mongo File Uploads</h1>
-        <form  onSubmit={submitImage} encType='multipart/form-data'>
-          <input 
-            type="file" 
-            name="file" 
-            id="file" 
-            className="custom-file-input border border-solid border-gray-300 px-4 py-2 rounded"  // Add the onChange handler here
-            onChange={onInputChange}/>
-          <input 
-            type="submit" 
-            value="Submit" 
-            className="text-blue-300 hover:text-blue-400 text-2xl px-4 py-2 rounded cursor-pointer"
-          />
+        <form className="m-5 p-6 border border-gray-300 rounded-lg shadow-lg bg-white" onSubmit={submitImage} encType="multipart/form-data">
+            <label htmlFor="file" className="block text-lg font-semibold mb-2 text-gray-700">Upload Image</label>
+            <input type="file" name="file" id="file" className="block w-full border border-gray-300 rounded-lg py-2 px-4 mb-4 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" onChange={onInputChange} />
+            <input type="submit" value="Submit" className="w-full bg-blue-500 text-white hover:bg-blue-600 text-xl py-2 rounded-lg transition duration-200 ease-in-out cursor-pointer"/>
         </form>
+
+        <div className='grid grid-cols-1 m-4 sm:grid-cols-2 2xl:grid-cols-3'>
         {allImage == null
         ? ""
         : allImage.map((data) => {
             return (
-              <img className='h-[600px] w-auto p-11' src={require(`/backend/uploads/${data.image}`)} alt='img'/>
+              <img className="w-full h-auto p-5 max-w-[600px] mx-auto lg:max-w-[800px] border border-gray-300 rounded-lg shadow-md transition-transform duration-200 ease-in-out hover:scale-105" src={require(`/backend/uploads/${data.image}`)} alt="img"/>
             );
           })}
+        </div>
       </div>
     </div>
   );
