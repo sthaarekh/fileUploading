@@ -1,14 +1,29 @@
-const connectToMongo = require('./db');
-const express = require('express')
+const express = require("express");
+const multer = require("multer");
 const app = express();
-connectToMongo();
-const port = 8080;
+const mongoose = require("mongoose");
+app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 
-// app.set('view engine', 'ejs');
-app.get('/',(req,res)=>{
-    // res.render('index');
-});
+const port= 1000;
 
-app.listen(port,()=>{
-    console.log(`Server started on port ${port}`);
+app.listen(port, () => {
+  console.log(`FileUpload backend listening on port ${port}`)
+})
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix+ file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage })
+app.post("/upload-image",upload.single("image"),async (req, res) => {
+console.log(req.body);
+res.send("Uploaded");
 })
